@@ -1,0 +1,28 @@
+syntax = "proto3";
+package com.canhtoan.ums.grpc;
+
+// Request payload
+message UserRequest {
+  // Each message attribute is strongly typed.
+  // You also must assign a "tag" number.
+  // Each tag number is unique within the message.
+  string apiName = 1;
+
+  string payload = 2;
+
+  // There are many more basics types, like Enum, Map
+  // See https://developers.google.com/protocol-buffers/docs/proto3
+  // for more information.
+}
+
+message UserResponse {
+  int32 code = 1;
+  string message = 2;
+  string data = 3;
+}
+
+// Defining a Service, a Service can have multiple RPC operations
+service UserService {
+  // Define a RPC operation
+  rpc register(UserRequest) returns (UserResponse);
+}
