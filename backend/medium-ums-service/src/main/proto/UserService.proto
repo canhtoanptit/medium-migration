@@ -1,5 +1,5 @@
 syntax = "proto3";
-package com.canhtoan.ums.grpc;
+package com.canhtoanptit.ums.service;
 
 // Request payload
 message UserRequest {
