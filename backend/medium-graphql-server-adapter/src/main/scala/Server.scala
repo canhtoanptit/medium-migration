@@ -20,7 +20,7 @@ import scala.util.control.NonFatal
 import scala.util.{Failure, Success}
 import GraphQLRequestUnmarshaller._
 import io.grpc.ManagedChannelBuilder
-import com.canhtoanptit.ums.service.userservice._
+import grpc.userservice._
 
 object Server extends App {
   implicit val system = ActorSystem("sangria-server")
