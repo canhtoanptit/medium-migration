@@ -4,7 +4,6 @@ import sangria.execution.{ErrorWithResolver, Executor, QueryAnalysisError}
 import sangria.parser.{QueryParser, SyntaxError}
 import sangria.parser.DeliveryScheme.Try
 import sangria.marshalling.circe._
-
 import akka.actor.ActorSystem
 import akka.http.scaladsl.Http
 import akka.http.scaladsl.model.StatusCodes._
@@ -12,17 +11,16 @@ import akka.http.scaladsl.server.Directives._
 import akka.http.scaladsl.model.MediaTypes._
 import akka.http.scaladsl.server._
 import akka.stream.ActorMaterializer
-
 import de.heikoseeberger.akkahttpcirce.ErrorAccumulatingCirceSupport._
-
 import io.circe._
 import io.circe.optics.JsonPath._
 import io.circe.parser._
 
 import scala.util.control.NonFatal
 import scala.util.{Failure, Success}
-
 import GraphQLRequestUnmarshaller._
+import io.grpc.ManagedChannelBuilder
+import com.canhtoanptit.ums.service.userservice._
 
 object Server extends App {
   implicit val system = ActorSystem("sangria-server")
@@ -107,6 +105,13 @@ object Server extends App {
     (get & pathEndOrSingleSlash) {
       redirect("/graphql", PermanentRedirect)
     }
-
+  def test(): Unit = {
+    val channel = ManagedChannelBuilder.forAddress("localhost", 8081).usePlaintext().build
+    val request = UserRequest("register", "{}")
+    val blockingStub = UserServiceGrpc.blockingStub(channel)
+    val reply: UserResponse = blockingStub.register(request)
+    println(reply)
+  }
+  test()
   Http().bindAndHandle(route, "0.0.0.0", sys.props.get("http.port").fold(8080)(_.toInt))
 }

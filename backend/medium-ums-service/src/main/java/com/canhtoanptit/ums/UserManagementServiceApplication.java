@@ -7,7 +7,7 @@ import io.grpc.ServerBuilder;
 public class UserManagementServiceApplication {
 
     public static void main(String[] args) throws Exception {
-        Server server = ServerBuilder.forPort(8080)
+        Server server = ServerBuilder.forPort(8081)
                 .addService(new UserServiceImpl())
                 .build();
 

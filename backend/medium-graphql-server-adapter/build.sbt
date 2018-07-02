@@ -17,8 +17,13 @@ libraryDependencies ++= Seq(
   "io.circe" %% "circe-parser" % "0.9.3",
   "io.circe" %% "circe-optics" % "0.9.3",
 
-  "org.scalatest" %% "scalatest" % "3.0.5" % Test
+  "org.scalatest" %% "scalatest" % "3.0.5" % Test,
+  "io.grpc" % "grpc-netty" % scalapb.compiler.Version.grpcJavaVersion,
+  "com.thesamet.scalapb" %% "scalapb-runtime-grpc" % scalapb.compiler.Version.scalapbVersion
 )
 
 Revolver.settings
 enablePlugins(JavaAppPackaging)
+PB.targets in Compile := Seq(
+  scalapb.gen() -> (sourceManaged in Compile).value
+)
