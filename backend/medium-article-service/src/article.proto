@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+package articles;
+
+service ArticleService {
+    rpc List (Empty) returns (ArticleList) {}
+    rpc Insert (Article) returns (Article) {}
+    rpc Get (ArticleIdRequest) returns (Article) {}
+    rpc Delete (ArticleIdRequest) returns (Empty) {}
+    rpc Watch (Empty) returns (stream Article) {}
+}
+
+message Empty {}
+
+message Article {
+    int32 id = 1;
+    string title = 2;
+    string author = 3;
+}
+
+message ArticleList {
+    repeated Article articles = 1;
+}
+
+message ArticleIdRequest {
+    int32 id = 1;
+}
