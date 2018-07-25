@@ -4,12 +4,14 @@
   "description": "",
   "main": "./src/server.js",
   "scripts": {
+    "start": "node ./src/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "ToanNC",
   "license": "ISC",
   "dependencies": {
     "google-protobuf": "^3.6.0",
-    "grpc": "^1.13.0"
+    "grpc": "^1.13.0",
+    "mongoose": "^5.2.5"
   }
 }

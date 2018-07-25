@@ -3,21 +3,28 @@ var grpc = require('grpc');
 var articleProto = grpc.load('./src/article.proto');
 
 var events  = require('events');
+var Article = require('./repository/article.model');
 
 var articleStream = new events.EventEmitter();
-
-var articles = [
-    {
-        id: 123,
-        title: 'A tale of two cities',
-        author: 'Charles Dickens'
-    }
-];
 
 var server = new grpc.Server();
 server.addService(articleProto.articles.ArticleService.service, {
     list: function(call, callback) {
-        callback(null, articles);
+        Article.find({}, function(err, articles) {
+            if (err) { console.log(err); }
+            console.log('article: ', articles);
+            const dataRes = articles.map(e => {return {id: e._id.toString(), title: e.title, author: e.author}});
+            console.log(dataRes);
+            callback(null, dataRes);
+        })
+    },
+    insert: function(call, callback) {
+        console.log('call is', call);
+        var article = call.request;
+        var inst = new Article(article);
+        inst.save().then(() => console.log('insert success'));
+        articleStream.emit('new_article', article);
+        callback(null, {});
     }
 });
 
