@@ -25,6 +25,13 @@ server.addService(articleProto.articles.ArticleService.service, {
         inst.save().then(() => console.log('insert success'));
         articleStream.emit('new_article', article);
         callback(null, {});
+    },
+    get: function(call, callback) {
+        var articleIdRequest = call.request;
+        Article.findById(articleIdRequest.id, (err, article) => {
+            if (err) { console.log('abc'); }
+            callback(null, {id: article._id.toString(), title: article.title, author: article.author})
+        });
     }
 });
 
