@@ -1,11 +1,20 @@
 var grpc = require('grpc');
 
-var articleProto = grpc.load('./src/article.proto');
+var articleProto = grpc.load('./src/protos/article.proto');
 
 var events  = require('events');
 var Article = require('./repository/article.model');
 
 var articleStream = new events.EventEmitter();
+
+var topicService = require('../src/service/topic.service');
+
+test();
+
+async function test() {
+    const res = await topicService.addCategory('foo');
+    console.log(await topicService.getAllCategory());
+}
 
 var server = new grpc.Server();
 server.addService(articleProto.articles.ArticleService.service, {

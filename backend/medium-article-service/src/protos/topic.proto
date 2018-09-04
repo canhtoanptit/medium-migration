@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package articles;
+
+service TopicService {
+    rpc getAllTopics(Empty) returns (ListTopics) {}
+}
+
+message Topic {
+    string id = 1;
+    string name = 2;
+    string thumbnail = 3;
+}
+
+message ListTopics {
+    repeated Topic topics = 1;
+}

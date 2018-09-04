@@ -10,8 +10,10 @@
   "author": "ToanNC",
   "license": "ISC",
   "dependencies": {
+    "bluebird": "^3.5.2",
     "google-protobuf": "^3.6.0",
     "grpc": "^1.13.0",
-    "mongoose": "^5.2.5"
+    "mongoose": "^5.2.5",
+    "redis": "^2.8.0"
   }
 }
