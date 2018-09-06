@@ -1,13 +1,13 @@
 const redisClient = require('../repository/redis.client');
 
 module.exports = {
-    addCategory: async function(category) {
-        return redisClient.hmsetAsync('test', {
-            user: 1,
-            pass: 2
-        });
+    addCategory: async function(key, category) {
+        return redisClient.hmsetAsync(key, category);
     },
-    getAllCategory:  async function() {
-        return redisClient.hgetallAsync('test');
+    getCategoryByKey:  async function(key) {
+        return redisClient.hgetallAsync(key);
+    },
+    getAllCategory: async function() {
+        return redisClient.scanAsync('0', 'MATCH', 'topic*');
     }
 }

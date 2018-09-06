@@ -12,7 +12,14 @@ var topicService = require('../src/service/topic.service');
 test();
 
 async function test() {
-    const res = await topicService.addCategory('foo');
+    await topicService.addCategory('topics', JSON.stringify({
+        abc: {
+            hehe: 1,
+            hihi: 2
+        },
+        xyz: 'tinh tinh'
+    }));
+    console.log(await topicService.getCategoryByKey('topic:a&t:1'));
     console.log(await topicService.getAllCategory());
 }
 
